@@ -1,0 +1,15 @@
+﻿@if (Model != null && !String.IsNullOrEmpty(Model.Message))
+{
+    if (Model.Message.Substring(0, 5) != "Error")
+    {
+        <div class="alert alert-success">
+            @Model.Message
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            @Model.Message
+        </div>
+    }
+}
