@@ -49,7 +49,7 @@ Create Table Categories
 (
 	ID INT IDENTITY(1,1) Primary Key NOT NULL,
 	Name nVarchar(50) NOT NULL,
-	Description nVarchar(560) NOT NULL,
+	Description nVarchar(max) NOT NULL,
 	IsDeleted bit  Check(IsDeleted = 1 OR IsDeleted = 0)
 	 Default(0)
 )
@@ -60,7 +60,7 @@ Create Table Items
 	ID INT IDENTITY(1,1) Primary Key NOT NULL,
 	CategoryID INT  Foreign Key(CategoryID) References Categories(ID),
 	Name nVarchar(50) NOT NULL,
-	Description nVarchar(560) NOT NULL,
+	Description nVarchar(max) NOT NULL,
 	Image Varbinary(Max) null,
 	UnitPrice Money not null,
 	IsDeleted bit  Check(IsDeleted = 1 OR IsDeleted = 0)
@@ -179,7 +179,10 @@ execute CreateUser 'Keval','Patel','wok.donair@gmail.com','UTQin/QledabGItEv8gA7
 /*Get Items- Index*/
 Drop Procedure If Exists GetAnItems
 GO
-CREATE Procedure GetAnItems
+Drop Procedure If Exists GetAllItems
+
+GO
+CREATE Procedure GetAllItems
 
 AS
 DECLARE @ReturnCode INT
@@ -223,7 +226,7 @@ GO
 CREATE Procedure AddCategory
 (
 @Name nvarchar(60) = NULL,
-@Description nvarchar(560) = NULL
+@Description nvarchar(max) = NULL
 )
 AS
 DECLARE @ReturnCode INT
