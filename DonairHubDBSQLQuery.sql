@@ -61,7 +61,7 @@ Create Table Items
 	CategoryID INT  Foreign Key(CategoryID) References Categories(ID),
 	Name nVarchar(50) NOT NULL,
 	Description nVarchar(max) NOT NULL,
-	Image Varbinary(Max) null,
+	Image nVarchar(max) null,
 	UnitPrice Money not null,
 	IsDeleted bit  Check(IsDeleted = 1 OR IsDeleted = 0)
 	 Default(0)
