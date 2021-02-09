@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Wok Donair & Poutine</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css?version=51" />
 </head>
 <body>
     <header>
@@ -24,7 +24,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Admin/ACategory/Index">Category</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/AMenu/Index">Menu</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Admin/AnItem/Index">Menu</a>
                             </li>
                         }
                     </ul>
@@ -45,13 +45,13 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MainPages/Menu">Menu</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Menu">Menu</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MainPages/OrderNow">Order Now</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/OrderNow">Order Now</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MainPages/Contact">Contact</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Contact">Contact</a>
                             </li>
                             <li>
                                 <a class="nav-link text-dark nav" asp-area="" asp-page="/Admin/Login">Login</a>

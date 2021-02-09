@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace DonairHubWebApplication.Domain
         [RegularExpression("([1-9][0-9]*.?[0-9]*)", ErrorMessage = "UnitPrice must be a positive number")]
         public decimal UnitPrice { get; set; }
         [Required]
+        public IFormFile OriginalImage { get; set; }
         public string Image { get; set; }
+        public string CategoryName { get; set; }
+        public string CategoryDescription { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

@@ -8,23 +8,25 @@ using DonairHubWebApplication.Technical_Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DonairHubWebApplication.Pages.Admin.ACategory
+namespace DonairHubWebApplication.Pages.Admin.AnItem
 {
     public class IndexModel : PageModel
     {
-        Categories objct = new Categories();
-        public List<Category> category { get; set; }
+        Items objitm = new Items();
+        public List<Item> item { get; set; }
 
         [BindProperty]
         [Required]
-        public string CategoryID { get; set; }
+        public string ItemID { get; set; }
 
         [TempData]
         public string Message { get; set; }
 
         public void OnGet()
         {
-            category = objct.GetAllCategories().ToList();
+                    item = objitm.GetAnItems().ToList();
         }
+
     }
 }
+

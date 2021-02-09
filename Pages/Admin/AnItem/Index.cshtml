@@ -1,0 +1,84 @@
+﻿@page
+@model DonairHubWebApplication.Pages.Admin.AnItem.IndexModel
+@{
+}
+
+<h2>Items</h2>
+<hr />
+<p>
+    <a asp-page="/Admin/AnItem/Create" class="btn btn-primary">Add An Item to Menu list</a>
+</p>
+<p>
+    <partial name="_Message" />
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.item[0].ItemID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.item[0].CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.item[0].ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.item[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.item[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.item[0].IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.item.Count() > 0)
+        {
+            @foreach (var item in Model.item)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDeleted)
+            </td>
+            <td>
+                @if (item.IsDeleted == false)
+                {
+                    <a asp-page="/AnItem/Edit" asp-route-id="@item.ItemID" class="btn btn-outline-secondary">Update</a>
+                    <a asp-page="/AnItem/Delete" asp-route-id="@item.ItemID" class="btn btn-outline-danger">Delete</a>
+                }
+                else
+                {
+                    <a asp-page="/AnItem/RestoreAnItem" asp-page-handler="RestoreItem" asp-route-id="@item.ItemID" class="btn btn-outline-danger">Restore</a>
+                }
+            </td>
+        </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">There is no data for items</td>
+            </tr>
+        }
+    </tbody>
+</table>

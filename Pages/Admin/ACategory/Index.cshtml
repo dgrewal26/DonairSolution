@@ -2,3 +2,71 @@
 @model DonairHubWebApplication.Pages.Admin.ACategory.IndexModel
 @{
 }
+<h2>Categories</h2>
+<hr />
+<p>
+    <a asp-page="/Admin/ACategory/Create" class="btn btn-primary">Add A Category</a>
+</p>
+<p>
+    <partial name="_Message" />
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.category[0].CategoryID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.category[0].IsDeleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.category.Count() > 0)
+        {
+            @foreach (var item in Model.category)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsDeleted)
+                    </td>
+                    <td>
+                        @if (item.IsDeleted == false)
+                        {
+                            <a asp-page="/AnItem/" asp-route-id="@item.CategoryID" class="btn btn-outline-secondary">Update</a>
+                            <a asp-page="/AnItem/" asp-route-id="@item.CategoryID" class="btn btn-outline-danger">Delete</a>
+                        }
+                        else
+                        {
+                            <a asp-page="/AnItem/RestoreAnItem" asp-page-handler="RestoreItem" asp-route-id="@item.CategoryID" class="btn btn-outline-danger">Restore</a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">There is no data for categories</td>
+            </tr>
+        }
+    </tbody>
+</table>

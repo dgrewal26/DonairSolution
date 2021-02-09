@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DonairHubWebApplication.Pages.Admin.AMenu
+namespace DonairHubWebApplication.Pages.Admin.AnItem
 {
     public class EditModel : PageModel
     {
