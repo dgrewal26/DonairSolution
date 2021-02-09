@@ -49,9 +49,9 @@ Create Table Categories
 (
 	ID INT IDENTITY(1,1) Primary Key NOT NULL,
 	Name nVarchar(50) NOT NULL,
-	Description nVarchar(100) NOT NULL,
-	IsDeleted bit  Check(IsDeleted = 'Y' OR IsDeleted = 'N')
-	 Default('N')
+	Description nVarchar(560) NOT NULL,
+	IsDeleted bit  Check(IsDeleted = 1 OR IsDeleted = 0)
+	 Default(0)
 )
 
 --Items Table
@@ -60,11 +60,11 @@ Create Table Items
 	ID INT IDENTITY(1,1) Primary Key NOT NULL,
 	CategoryID INT  Foreign Key(CategoryID) References Categories(ID),
 	Name nVarchar(50) NOT NULL,
-	Description nVarchar(100) NOT NULL,
+	Description nVarchar(560) NOT NULL,
 	Image Varbinary(Max) null,
 	UnitPrice Money not null,
-	IsDeleted bit Check(IsDeleted = 'Y' OR IsDeleted = 'N')
-	 Default('N')
+	IsDeleted bit  Check(IsDeleted = 1 OR IsDeleted = 0)
+	 Default(0)
 
 )
 
@@ -170,8 +170,93 @@ GO
 ---------Test Data -----------------
 
 insert into Role(Rolename, Description) values ('Admin','Administrator') 
-select * from Role
+
 
 --password: admin123
 execute CreateUser 'Keval','Patel','wok.donair@gmail.com','UTQin/QledabGItEv8gA7Q==:G87X5as1EFbJZtA0QbYeZw==',1
 ---------End Test Data -------------
+
+/*Get Items- Index*/
+Drop Procedure If Exists GetAnItems
+GO
+CREATE Procedure GetAnItems
+
+AS
+DECLARE @ReturnCode INT
+	SET @ReturnCode = 1
+		BEGIN
+			SELECT Items.Name as ItemName, Items.Description as ItemDescription,Items.Image, Items.UnitPrice, Items.IsDeleted, Items.ID as ItemID, Categories.ID as CategoriesID,
+			Categories.Name as CategoryName, Categories.Description as CategoryDescription, CategoryID
+			FROM Items 
+			INNER JOIN Categories ON Categories.ID = Items.CategoryID 
+			
+		IF @@ERROR = 0
+			SET @ReturnCode = 0
+		ELSE 
+			RAISERROR('GetAnItems - Get Items details error.',16,1)
+		END
+RETURN @ReturnCode
+GO
+
+/*Get Category- Index*/
+Drop Procedure If Exists GetAllCategories
+GO
+CREATE Procedure GetAllCategories
+
+AS
+DECLARE @ReturnCode INT
+	SET @ReturnCode = 1
+		BEGIN
+			SELECT * FROM Categories 
+			
+		IF @@ERROR = 0
+			SET @ReturnCode = 0
+		ELSE 
+			RAISERROR('GetAllCategories - Get Categories details error.',16,1)
+		END
+RETURN @ReturnCode
+GO
+
+/*create category */
+Drop Procedure If Exists AddCategory
+GO
+CREATE Procedure AddCategory
+(
+@Name nvarchar(60) = NULL,
+@Description nvarchar(560) = NULL
+)
+AS
+DECLARE @ReturnCode INT
+	SET @ReturnCode = 1
+
+	IF @Name IS NULL
+		RAISERROR('AddCategory - Required parameter: @Name', 16, 1)
+	ELSE
+	IF @Description IS NULL
+		RAISERROR('AddCategory - Required parameter: @Description', 16, 1)
+	ELSE
+		BEGIN
+			INSERT INTO Categories(Name, Description)
+			VALUES 
+				(@Name, @Description)
+		IF @@ERROR = 0
+					SET @ReturnCode = 0
+				ELSE 
+					RAISERROR('AddCategory - Add Error from Categories Table.',16,1)
+		END
+	RETURN @ReturnCode
+GO
+
+---------Test Data -----------------
+exec AddCategory 'Burgers', 'Combination of Buns, Veggies and Souces'
+exec AddCategory 'Salads', 'Combination of Veggies and Souces'
+exec AddCategory 'Vegetarian', 'Vegetarian Options'
+exec AddCategory 'Regular Wok Special Donairs', 'Wok special donairs are cooked with special sauce and sauteed with special vegetables'
+exec AddCategory 'Large Wok Special Donairs', 'Wok special donairs are cooked with special sauce and sauteed with special vegetables'
+exec AddCategory 'Rice Platters', 'All rice platters are served with donair meat, fresh salad, hummus, pita, and your choice of donair sauce on top'
+exec AddCategory 'Kids Specials', 'Special for Kids'
+exec AddCategory 'Poutines', 'Combination of fries, cheese curds and Special brown sauce'
+exec AddCategory 'Siders', 'Side Dishes'
+exec AddCategory 'Beverages', 'Soft Drinks'
+
+Select * from Categories
