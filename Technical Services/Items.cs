@@ -20,7 +20,7 @@ namespace DonairHubWebApplication.Technical_Services
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand("GetAnItems", con);
+                SqlCommand cmd = new SqlCommand("GetAllItems", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 con.Open();
